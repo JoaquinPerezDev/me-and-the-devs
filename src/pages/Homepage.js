@@ -1,15 +1,12 @@
+
+
 function Homepage() {
 
     return (
         <div>
-            <div>
-                <nav class="navbar navbar-light bg-light">
-                    <a class="navbar-brand" href="/">
-                    <i class="bi bi-boxes"></i>                    
-                    Me & The Devs
-                </a>
-                </nav>
-            </div>
+            <h1>
+                Homepage
+            </h1>
             <div>
                 {/* 
                 body, including: 
