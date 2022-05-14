@@ -1,4 +1,4 @@
-// src/pages/ProjectListPage.js
+
 
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -8,32 +8,32 @@ const API_URL = "http://localhost:5005";
 
 
 function ArticleListPage() {
-  const [projects, setProjects] = useState([]);
+  const [articles, setArticles] = useState([]);
 
-  const getAllProjects = () => {
+  const getAllArticles = () => {
     axios
-      .get(`${API_URL}/api/projects`)
-      .then((response) => setProjects(response.data))
+      .get(`${API_URL}/api/articles`)
+      .then((response) => setArticles(response.data))
       .catch((error) => console.log(error));
   };
 
   // We set this effect will run only once, after the initial render
   // by setting the empty dependency array - []
   useEffect(() => {
-    getAllProjects();
+    getAllArticles();
   }, [] );
 
     return(
     <div>
         <h1>The Article Page</h1>
         
-        <div className="ProjectListPage">
+        <div className="ArticleListPage">
       
-            {projects.map((project) => {
+            {articles.map((article) => {
                 return (
-                <div className="ProjectCard card" key={project._id} >
-                    <Link to={`/projects/${project._id}`}>
-                    <h3>{project.title}</h3>
+                <div className="ProjectCard card" key={article._id} >
+                    <Link to={`/articles/${article._id}`}>
+                    <h3>{article.title}</h3>
                     </Link>
                 </div>
                 );
