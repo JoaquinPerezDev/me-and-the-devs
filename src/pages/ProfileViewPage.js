@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-function ProfilePage() {
+function ProfileViewPage() {
   const [profile, setProfile] = useState([]);
  
   // This effect will run only once on initial render.
@@ -34,4 +34,4 @@ function ProfilePage() {
   );
 }
  
-export default ProfilePage;
+export default ProfileViewPage;
