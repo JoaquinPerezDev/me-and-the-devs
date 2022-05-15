@@ -1,5 +1,3 @@
-// src/pages/SignupPage.js
-
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -25,7 +23,7 @@ function SignupPage(props) {
 
       const requestBody = { email, password, name };
 
-      axios.post(`${API_URL}/auth/sign`, requestBody)
+      axios.post(`${API_URL}/auth/signup`, requestBody)
         .then((response) => {
             navigate('/login');
         })
