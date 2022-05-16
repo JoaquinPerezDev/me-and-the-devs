@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import service from "../api/service";
+import uploadImage from "../api/service";
 
 const API_URL = "http://localhost:5005";
 
@@ -36,19 +36,16 @@ function UserEditPage(props) {
   const handleExperience = (e) => setExperience(e.target.value);
   const handleEducation = (e) => setEducation(e.target.value);
   const handleFileUpload = (e) => {
-    
     const uploadData = new FormData();
 
     uploadData.append("imageUrl", e.target.files[0]);
 
-    service
-        .uploadImage(uploadData)
-        .then(response => {
-            setImageUrl(response.fileUrl);
-        })
-        .catch(err => console.log("error while uploading the file: ", err));
-
-    };
+    uploadImage(uploadData)
+      .then((response) => {
+        setImageUrl(response.fileUrl);
+      })
+      .catch((err) => console.log("error while uploading the file: ", err));
+  };
 
   const handleProject = (e) => setProject(e.target.value);
   const handleLinks = (e) => setLinks(e.target.value);
@@ -84,8 +81,8 @@ function UserEditPage(props) {
   };
 
   return (
-    <div className="SignupPage">
-      <h1>Sign Up</h1>
+    <div className=" container">
+      <h1>Edit Your Profile</h1>
 
       <form onSubmit={handleSignupSubmit}>
         <label>Email:</label>
@@ -94,13 +91,25 @@ function UserEditPage(props) {
         <label>Name:</label>
         <input type="text" name="name" value={name} onChange={handleName} />
 
-        <label>Current Role:</label>
-        <input
-          type="text"
-          name="currentRole"
-          value={currentRole}
-          onChange={handleCurrentRole}
-        />
+        <div>
+          <label htmlFor="exampleDataList" className="form-label">
+            Current Role:
+          </label>
+          <input
+            list="datalistOptions"
+            id="exampleDataList"
+            placeholder="Type to search..."
+            name="currentRole"
+            value={currentRole}
+            onChange={handleCurrentRole}
+          />
+          <datalist id="datalistOptions">
+            <option value="Full Stack Dev" />
+            <option value="Front End Dev" />
+            <option value="Back End Dev" />
+            <option value="UI/UX Designer" />
+          </datalist>
+        </div>
 
         <label>About Me:</label>
         <input
@@ -109,8 +118,7 @@ function UserEditPage(props) {
           value={aboutMe}
           onChange={handleAboutMe}
         />
-{/* CONTINUE ADDING EDIT FIELDS ON FORM TO FINISH USER EDIT PAGE ON FRONT ENT
- */}
+
         <label>Contact Info:</label>
         <input
           type="text"
@@ -120,12 +128,7 @@ function UserEditPage(props) {
         />
 
         <label>Skills:</label>
-        <input
-          type="text"
-          name="skill"
-          value={skill}
-          onChange={handleSkill}
-        />
+        <input type="text" name="skill" value={skill} onChange={handleSkill} />
 
         <label>Languages:</label>
         <input
@@ -175,13 +178,18 @@ function UserEditPage(props) {
           onChange={handleLinks}
         />
 
-        <input type="file" onChange={(e) => handleFileUpload(e)}/>
-
-        <button type="submit">Sign Up</button>
+        <div className="mb-3 container">
+          <label for="formFileSm" className="form-label" />
+          <input
+            id="formFileSm"
+            type="file"
+            onChange={(e) => handleFileUpload(e)}
+          />
+        </div>
+        <button type="submit">Update Your Information</button>
       </form>
 
       {errorMessage && <p className="error-message">{errorMessage}</p>}
-
     </div>
   );
 }
