@@ -1,8 +1,9 @@
 // src/pages/SignupPage.js
 
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import service from "../api/service";
 
 const API_URL = "http://localhost:5005";
 
@@ -34,7 +35,21 @@ function UserEditPage(props) {
   const handleInterests = (e) => setInterests(e.target.value);
   const handleExperience = (e) => setExperience(e.target.value);
   const handleEducation = (e) => setEducation(e.target.value);
-  const handleImageUrl = (e) => setImageUrl(e.target.value);
+  const handleFileUpload = (e) => {
+    
+    const uploadData = new FormData();
+
+    uploadData.append("imageUrl", e.target.files[0]);
+
+    service
+        .uploadImage(uploadData)
+        .then(response => {
+            setImageUrl(response.fileUrl);
+        })
+        .catch(err => console.log("error while uploading the file: ", err));
+
+    };
+
   const handleProject = (e) => setProject(e.target.value);
   const handleLinks = (e) => setLinks(e.target.value);
 
@@ -58,9 +73,9 @@ function UserEditPage(props) {
     };
 
     axios
-      .post(`${API_URL}/auth/signup`, requestBody)
+      .post(`${API_URL}/auth/edit`, requestBody)
       .then((response) => {
-        navigate("/login");
+        navigate("/");
       })
       .catch((err) => {
         const errorDescription = err.response.data.message;
@@ -96,85 +111,77 @@ function UserEditPage(props) {
         />
 {/* CONTINUE ADDING EDIT FIELDS ON FORM TO FINISH USER EDIT PAGE ON FRONT ENT
  */}
-        <label>Password:</label>
+        <label>Contact Info:</label>
         <input
-          type="password"
-          name="password"
-          value={password}
-          onChange={handlePassword}
+          type="text"
+          name="contactInfo"
+          value={contactInfo}
+          onChange={handleContactInfo}
         />
 
-        <label>Password:</label>
+        <label>Skills:</label>
         <input
-          type="password"
-          name="password"
-          value={password}
-          onChange={handlePassword}
+          type="text"
+          name="skill"
+          value={skill}
+          onChange={handleSkill}
         />
 
-        <label>Password:</label>
+        <label>Languages:</label>
         <input
-          type="password"
-          name="password"
-          value={password}
-          onChange={handlePassword}
+          type="text"
+          name="languages"
+          value={languages}
+          onChange={handleLanguages}
         />
 
-        <label>Password:</label>
+        <label>Interests:</label>
         <input
-          type="password"
+          type="text"
           name="password"
-          value={password}
-          onChange={handlePassword}
+          value={interests}
+          onChange={handleInterests}
         />
 
-        <label>Password:</label>
+        <label>Experience:</label>
         <input
-          type="password"
-          name="password"
-          value={password}
-          onChange={handlePassword}
+          type="text"
+          name="experience"
+          value={experience}
+          onChange={handleExperience}
         />
 
-        <label>Password:</label>
+        <label>Education:</label>
         <input
-          type="password"
-          name="password"
-          value={password}
-          onChange={handlePassword}
+          type="text"
+          name="education"
+          value={education}
+          onChange={handleEducation}
         />
 
-        <label>Password:</label>
+        <label>Project:</label>
         <input
-          type="password"
-          name="password"
-          value={password}
-          onChange={handlePassword}
+          type="text"
+          name="project"
+          value={project}
+          onChange={handleProject}
         />
 
-        <label>Password:</label>
+        <label>Your Links:</label>
         <input
-          type="password"
+          type="text"
           name="password"
-          value={password}
-          onChange={handlePassword}
+          value={links}
+          onChange={handleLinks}
         />
 
-        <label>Password:</label>
-        <input
-          type="password"
-          name="password"
-          value={password}
-          onChange={handlePassword}
-        />
+        <input type="file" onChange={(e) => handleFileUpload(e)}/>
 
         <button type="submit">Sign Up</button>
       </form>
 
       {errorMessage && <p className="error-message">{errorMessage}</p>}
 
-      <p>Already have account?</p>
-      <Link to={"/login"}> Login</Link>
     </div>
   );
 }

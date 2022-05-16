@@ -35,6 +35,9 @@ function Navbar() {
                     <Link to="/about">
                         <button>About Me</button>
                     </Link>
+                    <Link to="/edit">
+                        <button>Edit Your Profile</button>
+                    </Link>
                         <button onClick={logOutUser}>Logout</button>
                         <span>{user && user.name}</span>
                         </>

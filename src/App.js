@@ -11,6 +11,7 @@ import LoginPage from "./pages/LoginPage";
 import Navbar from './components/Navbar';
 import IsPrivate from "./components/IsPrivate";
 import IsAnon from "./components/IsAnon";
+import UserEditPage from "./pages/UserEditPage";
 
 
 function App() {
@@ -23,10 +24,11 @@ function App() {
     <Route path="/article" element={ <ArticleListPage />} />
     <Route path="/about" element={ <IsPrivate> <AboutPage /> </IsPrivate> } />
     <Route path="/profile" element={ <ProfileViewPage />} />
+    <Route path="/edit" element={ <IsPrivate> <UserEditPage /> </IsPrivate>} />
 {/* NEED TO CREATE: 
 -ARTICLE DETAILS PAGE (public view)
 -ARTICLE EDIT PAGE    (IsPrivate)
--PROFILE EDIT PAGE    (IsPrivate)
+-PROFILE EDIT PAGE    (IsPrivate) DONE 
 */}
     <Route path="/signup" element={ <IsAnon> <SignupPage /> </IsAnon>} />
     <Route path="/login" element={ <IsAnon> <LoginPage /> </IsAnon>} />
