@@ -1,8 +1,7 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
-import React, { useState, useEffect, useContext } from "react";
-import { AuthContext } from "./context/auth.context";
-import axios from "axios";
+import React from "react";
+
 
 import Homepage from "./pages/Homepage";
 import ArticleListPage from "./pages/ArticleListPage";
@@ -15,22 +14,10 @@ import IsPrivate from "./components/IsPrivate";
 import IsAnon from "./components/IsAnon";
 import UserEditPage from "./pages/UserEditPage";
 
-const API_URL = "http://localhost:5005";
 
-function App(props) {
-  const [userInfo, setUserInfo] = useState("");
-  // const { user } = useContext(AuthContext);
+function App() {
 
-  // useEffect(() => {
-  //   const storedToken = localStorage.getItem("authToken");
-  //   // getUsersInfo();
-  //   axios
-  //     .get(`${API_URL}/api/user/${user._id}`, {
-  //       headers: { Authorization: `Bearer ${storedToken}` },
-  //     })
-  //     .then((response) => setUserInfo(response.data))
-  //     .catch((error) => console.log(error));
-  // }, []);
+
 
   return (
     <div className="App">

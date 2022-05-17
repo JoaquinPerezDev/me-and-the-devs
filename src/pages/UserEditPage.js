@@ -1,6 +1,6 @@
 // src/pages/SignupPage.js
 
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
 import axios from "axios";
@@ -9,7 +9,6 @@ import uploadImage from "../api/service";
 const API_URL = "http://localhost:5005";
 
 function UserEditPage(props) {
-  const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [currentRole, setCurrentRole] = useState("");
   const [aboutMe, setAboutMe] = useState("");
@@ -20,8 +19,8 @@ function UserEditPage(props) {
   const [experience, setExperience] = useState("");
   const [education, setEducation] = useState("");
   const [imageUrl, setImageUrl] = useState("");
-  const [project, setProject] = useState("");
-  const [links, setLinks] = useState("");
+  // const [project, setProject] = useState("");
+  // const [links, setLinks] = useState("");
   const [errorMessage, setErrorMessage] = useState(undefined);
   const { user } = useContext(AuthContext);
 
@@ -37,7 +36,6 @@ function UserEditPage(props) {
   const handleExperience = (e) => setExperience(e.target.value);
   const handleEducation = (e) => setEducation(e.target.value);
   const handleFileUpload = (e) => {
-    console.log("text");
     const uploadData = new FormData();
 
     uploadData.append("imageUrl", e.target.files[0]);
@@ -49,8 +47,8 @@ function UserEditPage(props) {
       .catch((err) => console.log("error while uploading the file: ", err));
   };
 
-  const handleProject = (e) => setProject(e.target.value);
-  const handleLinks = (e) => setLinks(e.target.value);
+  // const handleProject = (e) => setProject(e.target.value);
+  // const handleLinks = (e) => setLinks(e.target.value);
 
   const handleSignupSubmit = (e) => {
     e.preventDefault();
@@ -66,8 +64,8 @@ function UserEditPage(props) {
       experience,
       education,
       imageUrl,
-      project,
-      links,
+      // project,
+      // links,
     };
 
     axios
@@ -76,11 +74,35 @@ function UserEditPage(props) {
         navigate(`/profile/${user._id}`);
       })
       .catch((err) => {
-        console.log(err.response.data.message);
         const errorDescription = err.response.data.message;
         setErrorMessage(errorDescription);
       });
   };
+
+  // We set this effect will run only once, after the initial render
+  // by setting the empty dependency array - []
+  useEffect(() => {
+    // getUsersInfo();
+    axios
+      .get(`${API_URL}/api/user/${user._id}`)
+      .then((response) => {
+        const userData = response.data;
+        console.log(userData)
+        setName(userData.name);
+        setCurrentRole(userData.currentRole);
+        setAboutMe(userData.aboutMe);
+        setContactInfo(userData.contactInfo);
+        setSkill(userData.skill);
+        setLanguages(userData.languages);
+        setInterests(userData.interests);
+        setExperience(userData.experience);
+        setEducation(userData.education);
+        setImageUrl(userData.imageUrl);
+        // setProject(userData.project);
+        // setLinks(userData.links);
+      })
+      .catch((error) => console.log(error));
+  }, [user]);
 
   return (
     <div className=" container">
@@ -161,21 +183,23 @@ function UserEditPage(props) {
           onChange={handleEducation}
         />
 
-        <label>Project:</label>
+        {/* <label>Project:</label>
         <input
           type="text"
           name="project"
           value={project}
           onChange={handleProject}
         />
-
+        
+        BREAK THESE DOWN TO EACH PIECE AND CREATE AN INPUT FOR EACH 
+        
         <label>Your Links:</label>
         <input
           type="text"
           name="password"
           value={links}
           onChange={handleLinks}
-        />
+        /> */}
 
         <div className="mb-3 container">
           <label htmlFor="formFileSm" className="form-label" />
