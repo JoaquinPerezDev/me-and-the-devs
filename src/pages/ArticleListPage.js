@@ -7,8 +7,9 @@ import { Link } from "react-router-dom";
 const API_URL = "http://localhost:5005";
 
 
-function ArticleListPage() {
+function ArticleListPage(props) {
   const [articles, setArticles] = useState([]);
+
 
   const getAllArticles = () => {
     axios

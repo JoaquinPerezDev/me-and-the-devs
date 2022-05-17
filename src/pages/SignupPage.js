@@ -4,7 +4,7 @@ import axios from "axios";
 
 const API_URL = "http://localhost:5005";
 
-function SignupPage() {
+function SignupPage(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");

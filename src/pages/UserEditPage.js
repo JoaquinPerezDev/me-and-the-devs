@@ -70,9 +70,9 @@ function UserEditPage(props) {
     };
 
     axios
-      .post(`${API_URL}/auth/edit`, requestBody)
+      .post(`${API_URL}/auth/${props.userInfo._id}/edit`, requestBody)
       .then((response) => {
-        navigate("/");
+        navigate("/profile");
       })
       .catch((err) => {
         const errorDescription = err.response.data.message;
@@ -179,7 +179,7 @@ function UserEditPage(props) {
         />
 
         <div className="mb-3 container">
-          <label for="formFileSm" className="form-label" />
+          <label htmlFor="formFileSm" className="form-label" />
           <input
             id="formFileSm"
             type="file"

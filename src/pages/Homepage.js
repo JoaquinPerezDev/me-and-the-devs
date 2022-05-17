@@ -1,6 +1,6 @@
 
 
-function Homepage() {
+function Homepage(props) {
 
     return (
         <div>
@@ -8,12 +8,18 @@ function Homepage() {
                 Homepage
             </h1>
             <div>
-            
+
                 {/* 
                 body, including: 
                 User posts feed
                 Devs spotlight
+                dev
+                dev
+                dev
+
                 company spotlight
+                company
+
                 News articles
                  */}
             </div>
