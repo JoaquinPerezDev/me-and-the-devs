@@ -1,6 +1,6 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
-import { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "./context/auth.context";
 import axios from "axios";
 
@@ -19,18 +19,18 @@ const API_URL = "http://localhost:5005";
 
 function App(props) {
   const [userInfo, setUserInfo] = useState("");
-  const { user } = useContext(AuthContext);
+  // const { user } = useContext(AuthContext);
 
-  useEffect(() => {
-    const storedToken = localStorage.getItem("authToken");
-    // getUsersInfo();
-    axios
-      .get(`${API_URL}/api/user/${user._id}`, {
-        headers: { Authorization: `Bearer ${storedToken}` },
-      })
-      .then((response) => setUserInfo(response.data))
-      .catch((error) => console.log(error));
-  }, []);
+  // useEffect(() => {
+  //   const storedToken = localStorage.getItem("authToken");
+  //   // getUsersInfo();
+  //   axios
+  //     .get(`${API_URL}/api/user/${user._id}`, {
+  //       headers: { Authorization: `Bearer ${storedToken}` },
+  //     })
+  //     .then((response) => setUserInfo(response.data))
+  //     .catch((error) => console.log(error));
+  // }, []);
 
   return (
     <div className="App">
@@ -39,13 +39,13 @@ function App(props) {
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/article" element={<ArticleListPage />} />
-        <Route path="/profile" element={<ProfilePage userInfo={userInfo} />} />
+        <Route path="/profile/:userId" element={<ProfilePage />} />
         <Route
           path="/edit"
           element={
             <IsPrivate>
               {" "}
-              <UserEditPage userInfo={userInfo} />{" "}
+              <UserEditPage />{" "}
             </IsPrivate>
           }
         />

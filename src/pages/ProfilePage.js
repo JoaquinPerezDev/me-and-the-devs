@@ -1,25 +1,12 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
+import ProfPicSection from "../components/ProfPicSection";
 
 const API_URL = "http://localhost:5005";
 
 function ProfilePage(props) {
     const [userInfo, setUserInfo] = useState([]);
-    // const [email, setEmail] = useState("");
-    // const [name, setName] = useState("");
-    // const [currentRole, setCurrentRole] = useState("");
-    // const [aboutMe, setAboutMe] = useState("");
-    // const [contactInfo, setContactInfo] = useState("");  
-    // const [skill, setSkill] = useState("");
-    // const [languages, setLanguages] = useState("");
-    // const [interests, setInterests] = useState("");
-    // const [experience, setExperience] = useState("");
-    // const [education, setEducation] = useState("");
-    // const [imageUrl, setImageUrl] = useState("");
-    // const [project, setProject] = useState("");
-    // const [links, setLinks] = useState("");
-    // THESE ARE FOR SETTING EACH PROFILE SECTION'S DISPLAYED INFO
     const { userId } = useParams();
 
     // We set this effect will run only once, after the initial render
@@ -36,6 +23,8 @@ function ProfilePage(props) {
     <div>
       <h1>The "Me" in Me & The Devs</h1>
       {/* USER's PUBLIC PROFILE VIEW PAGE */}
+      <ProfPicSection user={userInfo} />
+
 
     {/* 
     1) Created this page to be able to view a selected user's profile

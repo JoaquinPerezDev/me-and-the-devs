@@ -1,7 +1,8 @@
 // src/pages/SignupPage.js
 
-import { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/auth.context";
 import axios from "axios";
 import uploadImage from "../api/service";
 
@@ -22,10 +23,10 @@ function UserEditPage(props) {
   const [project, setProject] = useState("");
   const [links, setLinks] = useState("");
   const [errorMessage, setErrorMessage] = useState(undefined);
+  const { user } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
-  const handleEmail = (e) => setEmail(e.target.value);
   const handleName = (e) => setName(e.target.value);
   const handleCurrentRole = (e) => setCurrentRole(e.target.value);
   const handleAboutMe = (e) => setAboutMe(e.target.value);
@@ -36,6 +37,7 @@ function UserEditPage(props) {
   const handleExperience = (e) => setExperience(e.target.value);
   const handleEducation = (e) => setEducation(e.target.value);
   const handleFileUpload = (e) => {
+    console.log("text");
     const uploadData = new FormData();
 
     uploadData.append("imageUrl", e.target.files[0]);
@@ -54,7 +56,6 @@ function UserEditPage(props) {
     e.preventDefault();
 
     const requestBody = {
-      email,
       name,
       currentRole,
       aboutMe,
@@ -70,11 +71,12 @@ function UserEditPage(props) {
     };
 
     axios
-      .post(`${API_URL}/auth/${props.userInfo._id}/edit`, requestBody)
+      .put(`${API_URL}/api/user/${user._id}/edit`, requestBody)
       .then((response) => {
-        navigate("/profile");
+        navigate(`/profile/${user._id}`);
       })
       .catch((err) => {
+        console.log(err.response.data.message);
         const errorDescription = err.response.data.message;
         setErrorMessage(errorDescription);
       });
@@ -85,9 +87,6 @@ function UserEditPage(props) {
       <h1>Edit Your Profile</h1>
 
       <form onSubmit={handleSignupSubmit}>
-        <label>Email:</label>
-        <input type="email" name="email" value={email} onChange={handleEmail} />
-
         <label>Name:</label>
         <input type="text" name="name" value={name} onChange={handleName} />
 
@@ -183,13 +182,13 @@ function UserEditPage(props) {
           <input
             id="formFileSm"
             type="file"
+            accept="image/png, image/jpeg"
             onChange={(e) => handleFileUpload(e)}
           />
         </div>
+        {errorMessage && <p className="error-message">{errorMessage}</p>}
         <button type="submit">Update Your Information</button>
       </form>
-
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
     </div>
   );
 }
