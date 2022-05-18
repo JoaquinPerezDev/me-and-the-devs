@@ -1,17 +1,20 @@
+
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const API_URL = "http://localhost:5005";
 
 
-function ArticleListPage(props) {
-  const [articles, setArticles] = useState([]);
+function ArticleDetailsPage(props) {
+  const [articleInfo, setArticleInfo] = useState([]);
+  const { articleId } = useParams();
 
 
-  const getAllArticles = () => {
+  const getArticleDetails = () => {
     axios
-      .get(`${API_URL}/api/articles`)
+      .get(`${API_URL}/api/articles/${articleId}`)
       .then((response) => setArticles(response.data))
       .catch((error) => console.log(error));
   };
@@ -19,7 +22,7 @@ function ArticleListPage(props) {
   // We set this effect will run only once, after the initial render
   // by setting the empty dependency array - []
   useEffect(() => {
-    getAllArticles();
+    getArticleDetails();
   }, [] );
 
     return(
@@ -31,7 +34,7 @@ function ArticleListPage(props) {
             {articles.map((article) => {
                 return (
                 <div className="ProjectCard card" key={article._id} >
-                    <Link to={`/articles/${article._id}`}>
+                    <Link to={`/articles/${article._id}`} article={articleInfo}>
                     <h3>{article.title}</h3>
                     </Link>
                 </div>
@@ -55,4 +58,4 @@ function ArticleListPage(props) {
     )
 }
 
-export default ArticleListPage;
+export default ArticleDetailsPage;
