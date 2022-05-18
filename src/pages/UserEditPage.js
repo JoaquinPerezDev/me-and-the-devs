@@ -190,9 +190,8 @@ function UserEditPage(props) {
           value={project}
           onChange={handleProject}
         />
-        
-        BREAK THESE DOWN TO EACH PIECE AND CREATE AN INPUT FOR EACH 
-        
+        break these down to each element and create an input for each
+
         <label>Your Links:</label>
         <input
           type="text"

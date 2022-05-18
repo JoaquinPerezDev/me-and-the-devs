@@ -2,31 +2,47 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import ProfPicSection from "../components/ProfPicSection";
+import UserDetailsSection from "../components/UserDetailsSection";
+import SkillsDetailsSection from "../components/SkillsDetailsSection";
+import ExperienceDetailsSection from "../components/ExperienceDetailsSection";
+import LinksDetailsSection from "../components/LinksDetailsPage";
+import ProjectsDetailsSection from "../components/ProjectsDetailsSection";
+import UserContentSection from "../components/UserContentSestion";
+import ActivityDetailsSection from "../components/ActivityDetailsSection";
+import Navbar from "../components/Navbar";
+import { Nav } from "react-bootstrap";
 
 const API_URL = "http://localhost:5005";
 
 function ProfilePage(props) {
-    const [userInfo, setUserInfo] = useState([]);
-    const { userId } = useParams();
+  const [userInfo, setUserInfo] = useState([]);
+  const { userId } = useParams();
 
-    // We set this effect will run only once, after the initial render
-    // by setting the empty dependency array - []
-    useEffect(() => {
-      // getUsersInfo();
-      axios
-        .get(`${API_URL}/api/user/${userId}`)
-        .then((response) => setUserInfo(response.data))
-        .catch((error) => console.log(error));
-    }, [userId] );
+  // We set this effect will run only once, after the initial render
+  // by setting the empty dependency array - []
+  useEffect(() => {
+    // getUsersInfo();
+    axios
+      .get(`${API_URL}/api/user/${userId}`)
+      .then((response) => setUserInfo(response.data))
+      .catch((error) => console.log(error));
+  }, [userId]);
 
   return (
     <div>
       <h1>The "Me" in Me & The Devs</h1>
       {/* USER's PUBLIC PROFILE VIEW PAGE */}
       <ProfPicSection user={userInfo} />
+      <UserDetailsSection user={userInfo} />
+      <SkillsDetailsSection user={userInfo} />
+      <ExperienceDetailsSection user={userInfo} />
+      <LinksDetailsSection user={userInfo} />
+      <ProjectsDetailsSection user={userInfo} />
+      <UserContentSection user={userInfo} />
+      <ActivityDetailsSection user={userInfo} />
+      <Navbar />
 
-
-    {/* 
+      {/* 
     1) Created this page to be able to view a selected user's profile
     page. In this page, you will get information about the user:
     profile banner with prof pic, name, mini-about me section and 
@@ -37,9 +53,9 @@ function ProfilePage(props) {
     
      */}
 
-     {/*  PRELIMINARY STRUCTURE ORDER TOP-TO-BOTTOM FOR USER PROFILE PAGE*/}
+      {/*  PRELIMINARY STRUCTURE ORDER TOP-TO-BOTTOM FOR USER PROFILE PAGE*/}
 
-     {/* 
+      {/* 
      <>
      NAVBAR 
      
