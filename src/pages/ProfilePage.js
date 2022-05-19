@@ -10,7 +10,6 @@ import ProjectsDetailsSection from "../components/ProjectsDetailsSection";
 import UserContentSection from "../components/UserContentSestion";
 import ActivityDetailsSection from "../components/ActivityDetailsSection";
 import Navbar from "../components/Navbar";
-import { Nav } from "react-bootstrap";
 
 const API_URL = "http://localhost:5005";
 

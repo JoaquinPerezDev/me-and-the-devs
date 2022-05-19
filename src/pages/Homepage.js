@@ -1,6 +1,5 @@
 import React from "react";
-import TextEditor
- from "../components/TextEditor";
+
 function Homepage(props) {
 
     return (
@@ -9,7 +8,7 @@ function Homepage(props) {
                 Homepage
             </h1>
             <div>
-            <TextEditor />
+
                 {/* 
                 body, including: 
                 User posts feed

@@ -63,7 +63,6 @@ function AuthProviderWrapper(props) {
   useEffect(() => {
     authenticateUser();
   }, []);
-  // NEED TO CLARIFY THIS ERROR WITH JACK
 
   return (
     <AuthContext.Provider

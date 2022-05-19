@@ -2,46 +2,94 @@
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 const API_URL = "http://localhost:5005";
 
 
 function ArticleDetailsPage(props) {
-  const [articleInfo, setArticleInfo] = useState([]);
+  const [article, setArticle] = useState(null);
+  const [comment, setComment] = useState('');
+  const [author, setAuthor] = useState('');
+  const [errorMessage, setErrorMessage] = useState(null);
   const { articleId } = useParams();
+  const navigate = useNavigate();
 
 
   const getArticleDetails = () => {
     axios
       .get(`${API_URL}/api/articles/${articleId}`)
-      .then((response) => setArticles(response.data))
+      .then((response) => setArticle(response.data))
       .catch((error) => console.log(error));
   };
 
-  // We set this effect will run only once, after the initial render
-  // by setting the empty dependency array - []
   useEffect(() => {
     getArticleDetails();
   }, [] );
 
+  const handleCommentSubmit = (e) => {
+    e.preventDefault();
+
+    const requestBody = { author, comment };
+    const storedToken = localStorage.getItem("authToken");
+
+    axios
+      .post(`${API_URL}/api/articles/${articleId}/comment`, 
+      requestBody,
+      { headers: { Authorization: `Bearer ${storedToken}`}}
+      )
+      .then(() => {
+        setComment('');
+        setAuthor('');
+        props.refreshArticles();
+        navigate(`/articles/${articleId}`);
+      })
+      .catch((err) => {
+        const errorDescription = err.response.data.message;
+        setErrorMessage(errorDescription);
+      });
+}
+
     return(
-    <div>
+    <div className="ArticleDetailsPage">
         <h1>The Article Page</h1>
         
-        <div className="ArticleListPage">
+
+        {article && (
+        <>
+          <h1>{article.title}</h1>
+          <p>{article.content}</p>
+
+          <form onSubmit={handleCommentSubmit}>
+        <label>Comment:</label>
+        <textarea
+          type="text"
+          name="comment"
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
+        />
+ 
+        <button type="submit">Submit</button>
+      </form>
+        </>
+      )}
+ 
+      {article &&
+        article.comments.map((comment) => (
+          <li className="CommentCard card" key={comment._id}>
+            <p>{comment.content}</p>
+          </li>
+        ))}
+ 
+      <Link to="/articles">
+        <button>Back to articles</button>
+      </Link>
+      <Link to={`/articles/edit/${articleId}`}>
+        <button>Edit Article</button>
+      </Link>      
       
-            {articles.map((article) => {
-                return (
-                <div className="ProjectCard card" key={article._id} >
-                    <Link to={`/articles/${article._id}`} article={articleInfo}>
-                    <h3>{article.title}</h3>
-                    </Link>
-                </div>
-                );
-            })}     
-            
-        </div>
+        
+
             {/*  
             1) the goal is to make a document editor that the 
             registered user can use to publish articles on 
