@@ -5,40 +5,35 @@ import axios from "axios";
 const API_URL = "http://localhost:5005";
 
 function ArticlePublish(props) {
+  const [errorMessage, setErrorMessage] = useState(undefined);
+  const navigate = useNavigate();
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [summary, setSummary] = useState("");
 
-    const [errorMessage, setErrorMessage] = useState(undefined);  
-    const navigate = useNavigate();
-    const [title, setTitle] = useState("");
-    const [content, setContent] = useState("");
-   
-    const handleSubmit = (e) => {
-        e.preventDefault();
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-        const requestBody = { title, content };
-        const storedToken = localStorage.getItem("authToken");
+    const requestBody = { title, content, summary };
+    const storedToken = localStorage.getItem("authToken");
 
-        axios
-          .post(`${API_URL}/api/articles/create`, 
-          requestBody,
-          { headers: { Authorization: `Bearer ${storedToken}`}}
-          )
-          .then(() => {
-            setTitle('');
-            setContent('');
+    axios
+      .post(`${API_URL}/api/articles/create`, requestBody, {
+        headers: { Authorization: `Bearer ${storedToken}` },
+      })
+      .then(() => {
+        setTitle("");
+        setContent("");
+        setSummary("");
+        navigate("/articles");
+      })
+      .catch((err) => console.log(err));
+  };
 
-            props.refreshArticles();
-            navigate("/articles");
-          })
-          .catch((err) => {
-            const errorDescription = err.response.data.message;
-            setErrorMessage(errorDescription);
-          });
-    }
-
-    return (
-    <div className="PublishArticle" style={{ display: 'flex'}}>
+  return (
+    <div className="PublishArticle" style={{ display: "flex" }}>
       <h3>Publish an Article</h3>
- 
+
       <form onSubmit={handleSubmit}>
         <label>Title:</label>
         <input
@@ -47,7 +42,15 @@ function ArticlePublish(props) {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
- 
+                
+        <label>Summary:</label>
+        <input
+          type="text"
+          name="summary"
+          value={summary}
+          onChange={(e) => setSummary(e.target.value)}
+        />
+
         <label>Content:</label>
         <textarea
           type="text"
@@ -55,11 +58,11 @@ function ArticlePublish(props) {
           value={content}
           onChange={(e) => setContent(e.target.value)}
         />
- 
+
         <button type="submit">Submit</button>
       </form>
     </div>
-    )
+  );
 }
 
 export default ArticlePublish;

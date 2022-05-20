@@ -1,9 +1,9 @@
 import React from "react";
 import Card from "react-bootstrap/Card";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import { Link } from "react-router-dom";
 
 function UserContentSection(props) {
+    console.log(props)
   return (
     <div>
       <Card
@@ -15,28 +15,23 @@ function UserContentSection(props) {
         }}
       >
         <Card.Body>
-          <Card.Title>The Content</Card.Title>
+          <Card.Title>Content</Card.Title>
         </Card.Body>
       </Card>
-      <Row xs={2} md={4} className="g-4">
-        {Array.from({ length: 4 }).map((_, idx) => (
-          <Col>
-            <Card
-              className={{
-                width: "1rem",
-                height: "2rem",
-                fontSize: "1rem",
-                justifyContent: "center",
-              }}
-            >
-              <Card.Body>
-                <Card.Title>Article Title</Card.Title>
-                <Card.Text>Article body</Card.Text>
-              </Card.Body>
-            </Card>
-          </Col>
-        ))}
-      </Row>
+      {/* {props.user.articles.map((article) => {
+              return (
+                <Card
+                  className="articleCard"
+                >
+                  <Card.Img variant="top" src={article.imageUrl} />
+                  <Card.Body>
+                    <Card.Title>{article.author}</Card.Title>
+                    <Card.Text>{article.summary}</Card.Text>
+                    <Link to={`/articles/${article._id}`}>User profile</Link>
+                  </Card.Body>
+                </Card>
+              );
+            })} */}
     </div>
   );
 }

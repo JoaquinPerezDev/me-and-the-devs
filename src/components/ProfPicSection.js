@@ -2,9 +2,9 @@ import Figure from "react-bootstrap/Figure";
 import React from "react";
 
 function ProfPicSection(props) {
+  console.log(props)
   return (
     <Figure>
-      <Figure.Caption>{props.user.name}</Figure.Caption>
       <Figure.Image
         width={171}
         height={180}

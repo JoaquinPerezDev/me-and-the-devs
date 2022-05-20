@@ -14,21 +14,21 @@ function ActivityDetailsSection(props) {
             <Card style={{ width: '22rem', height: '4rem', justifyContent: 'center', marginBottom: '25px'}}>
                 <Card.Body>
                     <Card.Text>
-                            <p>Most recent activity</p>
+                            Most recent activity
                     </Card.Text>
                 </Card.Body>
             </Card>
             <Card style={{ width: '22rem', height: '4rem', justifyContent: 'center', marginBottom: '25px' }}>
                 <Card.Body>
                     <Card.Text>
-                            <p>Second most recent</p>
+                            Second most recent
                     </Card.Text>
                 </Card.Body>
             </Card>
             <Card style={{ width: '22rem', height: '4rem', justifyContent: 'center', marginBottom: '50px' }}>
                 <Card.Body>
                     <Card.Text>
-                            <p>Third most recent</p>
+                            Third most recent
                     </Card.Text>
                 </Card.Body>
             </Card>

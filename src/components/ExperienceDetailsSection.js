@@ -7,20 +7,16 @@ function ExperienceDetailsSection(props) {
         <div>
             <Card style={{ width: '10rem', height: '3rem', justifyContent: 'center', marginBottom: '15px' }}>
                 <Card.Body>
-                    <Card.Title>The Experience</Card.Title>
+                    <Card.Title>Experience</Card.Title>
                 </Card.Body>
             </Card>
-            <Card style={{ width: '18rem', marginBottom: '50px' }}>
+            <Card className="container" style={{ marginBottom: '50px' }}>
                 <Card.Body>
-                    <Card.Text>
-                        <ul className="user-details">
-                            <li>{props.user.education}</li>
-                            <li>Placeholder second education</li>
-                            <li>{props.user.experience}</li>
-                            <li>Placeholder second experience</li>
-                            <li>Placeholder third experience</li>
-                        </ul>
-                    </Card.Text>
+                            <h4>Education</h4>
+                            {props.user.education}
+                            
+                            <h4>Work Experience</h4>
+                            {props.user.experience}
                 </Card.Body>
             </Card>
         </div>

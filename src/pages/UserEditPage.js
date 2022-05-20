@@ -1,10 +1,11 @@
 // src/pages/SignupPage.js
 
 import React, { useState, useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
 import axios from "axios";
 import uploadImage from "../api/service";
+
 
 const API_URL = "http://localhost:5005";
 
@@ -12,6 +13,7 @@ function UserEditPage(props) {
   const [name, setName] = useState("");
   const [currentRole, setCurrentRole] = useState("");
   const [aboutMe, setAboutMe] = useState("");
+  const [location, setLocation] = useState("");
   const [contactInfo, setContactInfo] = useState("");
   const [skill, setSkill] = useState("");
   const [languages, setLanguages] = useState("");
@@ -19,14 +21,13 @@ function UserEditPage(props) {
   const [experience, setExperience] = useState("");
   const [education, setEducation] = useState("");
   const [imageUrl, setImageUrl] = useState("");
-  // const [project, setProject] = useState("");
-  // const [links, setLinks] = useState("");
   const [errorMessage, setErrorMessage] = useState(undefined);
+  
   const { user } = useContext(AuthContext);
-
   const navigate = useNavigate();
 
   const handleName = (e) => setName(e.target.value);
+  const handleLocation = (e) => setLocation(e.target.value);
   const handleCurrentRole = (e) => setCurrentRole(e.target.value);
   const handleAboutMe = (e) => setAboutMe(e.target.value);
   const handleContactInfo = (e) => setContactInfo(e.target.value);
@@ -42,7 +43,8 @@ function UserEditPage(props) {
 
     uploadImage(uploadData)
       .then((response) => {
-        setImageUrl(response.fileUrl);
+        console.log(response.data)
+        setImageUrl(response.imageUrl);
       })
       .catch((err) => console.log("error while uploading the file: ", err));
   };
@@ -55,10 +57,11 @@ function UserEditPage(props) {
 
     const requestBody = {
       name,
+      location,
       currentRole,
       aboutMe,
       contactInfo,
-      skill,
+      skill, 
       languages,
       interests,
       experience,
@@ -87,8 +90,8 @@ function UserEditPage(props) {
       .get(`${API_URL}/api/user/${user._id}`)
       .then((response) => {
         const userData = response.data;
-        console.log(userData)
         setName(userData.name);
+        setLocation(userData.location);
         setCurrentRole(userData.currentRole);
         setAboutMe(userData.aboutMe);
         setContactInfo(userData.contactInfo);
@@ -111,7 +114,8 @@ function UserEditPage(props) {
       <form onSubmit={handleSignupSubmit}>
         <label>Name:</label>
         <input type="text" name="name" value={name} onChange={handleName} />
-
+        <label>Location:</label>
+        <input type="text" name="location" value={location} onChange={handleLocation} />
         <div>
           <label htmlFor="exampleDataList" className="form-label">
             Current Role:
@@ -183,15 +187,22 @@ function UserEditPage(props) {
           onChange={handleEducation}
         />
 
-        {/* <label>Project:</label>
-        <input
-          type="text"
-          name="project"
-          value={project}
-          onChange={handleProject}
-        />
-        break these down to each element and create an input for each
 
+        <button>
+        <Link to="/user/project/create" className="navbar-brand">
+            Add a project
+        </Link>
+        </button>
+
+        <button>
+        <Link to="/user/link/create" className="navbar-brand">
+            Add a link
+        </Link>
+        </button>
+        {/* 
+
+        put links here to redirect to add project page and add links page
+        add back button on those pages to redirect back to this user edit page
         <label>Your Links:</label>
         <input
           type="text"

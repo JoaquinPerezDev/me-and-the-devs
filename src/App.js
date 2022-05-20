@@ -14,7 +14,11 @@ import IsAnon from "./components/IsAnon";
 import UserEditPage from "./pages/UserEditPage";
 import ArticleDetailsPage from "./pages/ArticleDetailsPage";
 import ArticleEditPage from "./pages/ArticleEditPage";
-
+import ErrorPage from "./pages/ErrorPage";
+import ArticleCreatePage from "./pages/ArticleCreatePage";
+import AddProjectPage from "./pages/AddProjectPage";
+import AddLinkPage from "./pages/AddLinkPage";
+import NavbarBottom from "./components/NavbarBottom";
 
 function App() {
 
@@ -27,9 +31,13 @@ function App() {
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/articles" element={<ArticleListPage />} />
+        <Route path="/create" element={<IsPrivate><ArticleCreatePage /></IsPrivate>} />
         <Route path="/articles/:articleId" element={<ArticleDetailsPage />} />
         <Route path="/articles/edit/:articleId" element={ <IsPrivate><ArticleEditPage /></IsPrivate>} />
         <Route path="/profile/:userId" element={<ProfilePage />} />
+        <Route path="/user/project/create" element={<IsPrivate><AddProjectPage /></IsPrivate>} />
+        <Route path="/user/link/create" element={<IsPrivate><AddLinkPage /></IsPrivate>} />        
+        <Route path="*" element={ <ErrorPage /> } />
         <Route
           path="/edit"
           element={

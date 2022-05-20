@@ -45,7 +45,12 @@ function ArticleListPage(props) {
 
           { isLoggedIn && (
             <>
-            <ArticlePublish refreshArticles={getAllArticles}/>
+            <Link to={"articles/"}>
+                    <button>My Profile</button>
+            </Link>
+            <Link to={"/create"}>
+                    <button>Write an Article</button>
+            </Link>
             </>
           )}
 

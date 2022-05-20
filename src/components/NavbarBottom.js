@@ -2,15 +2,15 @@ import { Link } from "react-router-dom";
 import React, { useContext } from "react";
 import { AuthContext } from "../context/auth.context";
 
-function Navbar() {
+function NavbarBottom() {
   const { isLoggedIn, user, logOutUser } = useContext(AuthContext);
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-light">
+      <nav className="navbar navbar-expand-lg navbar-light bg-light" fixed="bottom">
         <div className="container-fluid">
           <Link to="/" className="navbar-brand">
-            <h1 style={{ color: '#125841', fontWeight: '700' }}>Me & The Devs</h1>
+            Me & The Devs
           </Link>
           <button
             className="navbar-toggler"
@@ -30,41 +30,34 @@ function Navbar() {
                   Home
                 </Link>
               </li>
-              <li className="nav-link">
-                <Link to="/articles" className="navLink">
+              <li className="nav-item">
+                <Link to="/articles" className="nav-link">
                   Articles
                 </Link>
               </li>
               {isLoggedIn && (
                 <>
-                <li className="nav-item">
-                  <Link to={`/profile/${user._id}`} className="nav-link">
-                    My Profile
+                  <Link to={`/profile/${user._id}`}>
+                    <button>My Profile</button>
                   </Link>
-                </li>
-                <li className="nav-item">            
-                <Link to="/edit" className="nav-link">
-                    Edit Your Profile
+                  <Link to="/edit">
+                    <button>Edit Your Profile</button>
                   </Link>
-                </li>
-                <li className="nav-link">
-                  <Link to="/" onClick={logOutUser} className="navLink">Logout</Link>
-                </li>
+                  <button onClick={logOutUser}>Logout</button>
+                  <span>{user && user.name}</span>
                 </>
               )}
 
               {!isLoggedIn && (
                 <>
-                  <li className="nav-item">
-                  <Link to="/signup" className="navLink">
-                    Sign Up
+                  <Link to="/signup">
+                    {" "}
+                    <button>Sign Up</button>{" "}
                   </Link>
-                  </li>
-                  <li className="nav-item">
-                  <Link to="/login" className="navLink">
-                    Login
+                  <Link to="/login">
+                    {" "}
+                    <button>Login</button>{" "}
                   </Link>
-                  </li>
                 </>
               )}
             </ul>
@@ -75,4 +68,4 @@ function Navbar() {
   );
 }
 
-export default Navbar;
+export default NavbarBottom;

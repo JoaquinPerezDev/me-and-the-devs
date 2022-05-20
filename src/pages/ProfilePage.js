@@ -8,13 +8,12 @@ import ExperienceDetailsSection from "../components/ExperienceDetailsSection";
 import LinksDetailsSection from "../components/LinksDetailsPage";
 import ProjectsDetailsSection from "../components/ProjectsDetailsSection";
 import UserContentSection from "../components/UserContentSestion";
-import ActivityDetailsSection from "../components/ActivityDetailsSection";
 import Navbar from "../components/Navbar";
 
 const API_URL = "http://localhost:5005";
 
 function ProfilePage(props) {
-  const [userInfo, setUserInfo] = useState([]);
+  const [userInfo, setUserInfo] = useState({});
   const { userId } = useParams();
 
   // We set this effect will run only once, after the initial render
@@ -29,7 +28,7 @@ function ProfilePage(props) {
 
   return (
     <div>
-      <h1>The "Me" in Me & The Devs</h1>
+      <h1 style={{ marginTop: '50px'}}>The "Me" in Me & The Devs</h1>
       {/* USER's PUBLIC PROFILE VIEW PAGE */}
       <ProfPicSection user={userInfo} />
       <UserDetailsSection user={userInfo} />
@@ -38,8 +37,12 @@ function ProfilePage(props) {
       <LinksDetailsSection user={userInfo} />
       <ProjectsDetailsSection user={userInfo} />
       <UserContentSection user={userInfo} />
-      <ActivityDetailsSection user={userInfo} />
-      <Navbar />
+      <button>
+      <Link to={`/edit`} className="navbar-brand">
+            Edit Profile
+      </Link>
+      </button>
+
 
       {/* 
     1) Created this page to be able to view a selected user's profile

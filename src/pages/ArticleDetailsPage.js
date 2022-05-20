@@ -10,7 +10,6 @@ const API_URL = "http://localhost:5005";
 function ArticleDetailsPage(props) {
   const [article, setArticle] = useState(null);
   const [comment, setComment] = useState('');
-  const [author, setAuthor] = useState('');
   const [errorMessage, setErrorMessage] = useState(null);
   const { articleId } = useParams();
   const navigate = useNavigate();
@@ -19,7 +18,10 @@ function ArticleDetailsPage(props) {
   const getArticleDetails = () => {
     axios
       .get(`${API_URL}/api/articles/${articleId}`)
-      .then((response) => setArticle(response.data))
+      .then((response) => {
+          console.log(response.data)
+          setArticle(response.data)
+      })
       .catch((error) => console.log(error));
   };
 
@@ -30,26 +32,41 @@ function ArticleDetailsPage(props) {
   const handleCommentSubmit = (e) => {
     e.preventDefault();
 
-    const requestBody = { author, comment };
+    const requestBody = { content: comment };
     const storedToken = localStorage.getItem("authToken");
-
+    console.log(requestBody, storedToken)
     axios
       .post(`${API_URL}/api/articles/${articleId}/comment`, 
       requestBody,
       { headers: { Authorization: `Bearer ${storedToken}`}}
       )
-      .then(() => {
+      .then((response) => {
+        setArticle({ 
+            ...article, 
+            comments: [...article.comments, response.data]
+        })
+        console.log("inside response")  
         setComment('');
-        setAuthor('');
-        props.refreshArticles();
-        navigate(`/articles/${articleId}`);
       })
       .catch((err) => {
-        const errorDescription = err.response.data.message;
+          console.log(err)
+        const errorDescription = err.response.message;
         setErrorMessage(errorDescription);
       });
 }
 
+const deleteComment = () => {
+    const storedToken = localStorage.getItem("authToken");
+
+    axios
+      .delete(`${API_URL}/api/articles/comment`, {
+        headers: { Authorization: `Bearer ${storedToken}` },
+      })
+      .then(() => {
+        navigate(`/articles/${articleId}`);
+      })
+      .catch((err) => console.log(err));
+  };
     return(
     <div className="ArticleDetailsPage">
         <h1>The Article Page</h1>
@@ -57,28 +74,34 @@ function ArticleDetailsPage(props) {
 
         {article && (
         <>
+        <div className="articleBody">
           <h1>{article.title}</h1>
           <p>{article.content}</p>
-
-          <form onSubmit={handleCommentSubmit}>
-        <label>Comment:</label>
-        <textarea
-          type="text"
-          name="comment"
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
-        />
- 
-        <button type="submit">Submit</button>
-      </form>
+        </div>
+        <div className="commentBody">
+            <form onSubmit={handleCommentSubmit}>
+            <label>Comment:</label>
+            <textarea
+            type="text"
+            name="comment"
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+            />
+    
+            <button type="submit">Submit</button>
+        </form>
+        </div>
         </>
       )}
  
       {article &&
         article.comments.map((comment) => (
           <li className="CommentCard card" key={comment._id}>
-            <p>{comment.content}</p>
+            <h4>{comment.content}</h4>
+            <p>-{comment.author.name}</p>
+            <button onClick={deleteComment}>Delete</button>
           </li>
+          
         ))}
  
       <Link to="/articles">
@@ -87,6 +110,8 @@ function ArticleDetailsPage(props) {
       <Link to={`/articles/edit/${articleId}`}>
         <button>Edit Article</button>
       </Link>      
+
+
       
         
 
