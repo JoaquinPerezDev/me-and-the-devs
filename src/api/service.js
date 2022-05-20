@@ -12,7 +12,7 @@ const errorHandler = (err) => {
  
 
 const uploadImage = (file) => {
-  return api.post("/upload", file)
+  return api.post("/upload", file, { headers : { Authorization: `Bearer ${localStorage.getItem('authToken')}`}})
     .then(res => res.data)
     .catch(errorHandler);
 };

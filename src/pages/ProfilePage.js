@@ -22,7 +22,9 @@ function ProfilePage(props) {
     // getUsersInfo();
     axios
       .get(`${API_URL}/api/user/${userId}`)
-      .then((response) => setUserInfo(response.data))
+      .then((response) => {
+        setUserInfo(response.data)
+      })
       .catch((error) => console.log(error));
   }, [userId]);
 
@@ -36,7 +38,7 @@ function ProfilePage(props) {
       <ExperienceDetailsSection user={userInfo} />
       <LinksDetailsSection user={userInfo} />
       <ProjectsDetailsSection user={userInfo} />
-      <UserContentSection user={userInfo} />
+      {/* <UserContentSection user={userInfo} /> */}
       <button>
       <Link to={`/edit`} className="navbar-brand">
             Edit Profile

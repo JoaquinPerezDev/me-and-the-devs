@@ -3,7 +3,7 @@ import Card from "react-bootstrap/Card";
 import { Link } from "react-router-dom";
 
 function UserContentSection(props) {
-    console.log(props)
+console.log(props)
   return (
     <div>
       <Card
