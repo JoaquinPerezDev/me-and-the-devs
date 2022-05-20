@@ -73,8 +73,7 @@ function Homepage(props) {
                 >
                   <Card.Img variant="top" src={user.imageUrl} />
                   <Card.Body>
-                    <Card.Title>Dev Name</Card.Title>
-                    <Card.Text>Dev About Me</Card.Text>
+                    <Card.Title>{user.name}</Card.Title>
                     <Link to={`/profile/${user._id}`}>User profile</Link>
                   </Card.Body>
                 </Card>
