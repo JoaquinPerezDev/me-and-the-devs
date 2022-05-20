@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import ArticlePublish from "../components/ArticlePublish";
 import { AuthContext } from "../context/auth.context";
 
-const API_URL = "http://localhost:5005";
+const API_URL = process.env.REACT_APP_API_URL;
 
 
 function ArticleListPage(props) {

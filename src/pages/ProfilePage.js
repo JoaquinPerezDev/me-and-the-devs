@@ -10,7 +10,7 @@ import ProjectsDetailsSection from "../components/ProjectsDetailsSection";
 import UserContentSection from "../components/UserContentSestion";
 import Navbar from "../components/Navbar";
 
-const API_URL = "http://localhost:5005";
+const API_URL = process.env.REACT_APP_API_URL;
 
 function ProfilePage(props) {
   const [userInfo, setUserInfo] = useState({});

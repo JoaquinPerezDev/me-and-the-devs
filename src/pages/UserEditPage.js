@@ -6,8 +6,7 @@ import { AuthContext } from "../context/auth.context";
 import axios from "axios";
 import uploadImage from "../api/service";
 
-
-const API_URL = "http://localhost:5005";
+const API_URL = process.env.REACT_APP_API_URL;
 
 function UserEditPage(props) {
   const [name, setName] = useState("");
@@ -22,7 +21,7 @@ function UserEditPage(props) {
   const [education, setEducation] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [errorMessage, setErrorMessage] = useState(undefined);
-  
+
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -43,7 +42,7 @@ function UserEditPage(props) {
 
     uploadImage(uploadData)
       .then((response) => {
-        console.log(response.data)
+        console.log(response.data);
         setImageUrl(response.imageUrl);
       })
       .catch((err) => console.log("error while uploading the file: ", err));
@@ -61,7 +60,7 @@ function UserEditPage(props) {
       currentRole,
       aboutMe,
       contactInfo,
-      skill, 
+      skill,
       languages,
       interests,
       experience,
@@ -115,7 +114,12 @@ function UserEditPage(props) {
         <label>Name:</label>
         <input type="text" name="name" value={name} onChange={handleName} />
         <label>Location:</label>
-        <input type="text" name="location" value={location} onChange={handleLocation} />
+        <input
+          type="text"
+          name="location"
+          value={location}
+          onChange={handleLocation}
+        />
         <div>
           <label htmlFor="exampleDataList" className="form-label">
             Current Role:
@@ -187,17 +191,16 @@ function UserEditPage(props) {
           onChange={handleEducation}
         />
 
-
         <button>
-        <Link to="/user/project/create" className="navbar-brand">
+          <Link to="/user/project/create" className="navbar-brand">
             Add a project
-        </Link>
+          </Link>
         </button>
 
         <button>
-        <Link to="/user/link/create" className="navbar-brand">
+          <Link to="/user/link/create" className="navbar-brand">
             Add a link
-        </Link>
+          </Link>
         </button>
         {/* 
 
